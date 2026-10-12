@@ -1,0 +1,22 @@
+{
+  "name": "duck-js",
+  "version": "1.0.0",
+  "description": "Basic Node.js duck project with Jest tests",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "lint": "eslint .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "jest": "^30.5.2",
+    "prettier": "^3.9.10"
+  }
+}
