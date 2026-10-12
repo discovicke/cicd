@@ -1,5 +1,5 @@
-import js from '@eslint/js';
-import globals from 'globals';
+import js from "@eslint/js";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -9,7 +9,7 @@ export default [
     },
   },
   {
-    files: ['tests/**/*.js'],
+    files: ["tests/**/*.js"],
     languageOptions: {
       globals: { ...globals.jest },
     },
