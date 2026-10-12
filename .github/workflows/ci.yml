@@ -27,3 +27,26 @@ jobs:
 
       - name: Test
         run: dotnet test cicd.sln --no-build --verbosity normal
+
+  publish:
+    needs: build-and-test
+    # Körs bara på push till main, aldrig på PR. Körs bara om tester är gröna (needs).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Publish win-x64 (self-contained .exe)
+        run: dotnet publish cicd/cicd.csproj -c Release -r win-x64 --self-contained true -o publish/win-x64 /p:PublishSingleFile=true
+
+      - name: Upload published app
+        uses: actions/upload-artifact@v4
+        with:
+          name: cicd-win-x64
+          path: publish/win-x64/
