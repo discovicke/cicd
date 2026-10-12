@@ -30,6 +30,9 @@ jobs:
       - name: Lint (no warnings allowed)
         run: npm run lint
 
+      - name: Check formatting (no format errors allowed)
+        run: npm run format:check
+
       - name: Run tests
         run: npm test
 
