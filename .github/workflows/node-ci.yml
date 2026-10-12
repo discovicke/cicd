@@ -29,3 +29,24 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  package:
+    needs: test
+    # Körs bara på push till main, aldrig på PR. Körs bara om testerna är gröna (needs).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Medvetet minimalt paket: bara det som behövs för att köra appen.
+      # Utesluts: tests/, node_modules/ (enbart devDependencies här),
+      # eslint.config.js, .prettierrc, coverage, package-lock.json.
+      - name: Create ZIP package
+        run: zip -r duck-js.zip node-duck/package.json node-duck/src
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: duck-js-package
+          path: duck-js.zip
